@@ -47,7 +47,7 @@
 > 
 > export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/build-tools:$ANDROID_HOME/platform-tools:$ANDROID_HOME/cmdline-tools
 
-4.  Create new Android Emulator (e.g. Pixel 8 API 33) with 4GB+ RAM
+4.  Create new Android Emulator (e.g. Pixel 8 API 33) with 4GB+ RAM and launch it
 
 5.  Run all tests:
 >  ./gradlew test
