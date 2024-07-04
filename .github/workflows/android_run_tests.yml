@@ -1,0 +1,106 @@
+name: Run UI-tests on AVD
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      device:
+        required: true
+        default: 'Pixel8_API33'
+        type: choice
+        options:
+          - 'Pixel8_API33'
+          - 'Pixel8_API35'
+
+env:
+  LC_ALL: 'en_US.UTF-8'
+  LANG: 'en_US.UTF-8'
+  LANGUAGE: 'en_US.UTF-8'
+  DEVICE: ${{ inputs.device || 'Pixel8_API33' }}
+
+jobs:
+  build:
+    name: Test Android app
+    runs-on: macos
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout git
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: 21
+      
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+        
+      - name: Get environment info
+        run: env
+        working-directory: ${{ github.workspace }}
+
+      - name: Clean cache files
+        run: |
+          rm -rf ./allure-reports
+          rm -rf ./allure-results
+          rm -rf allurectl
+
+      - name: Install node dependencies
+        run:  npm install -g appium
+
+      - name: Install appium plugins 
+        run: |
+          appium driver install uiautomator2
+          appium driver install espresso 
+
+      # - name: Launch AVD 
+      #   run: emulator -avd ${{ env.DEVICE }}
+
+      # - name: Run UI-tests
+      #   run: ./gradlew test
+
+      - name: Save allure-results
+        if: ${{ always()}}
+        uses: actions/upload-artifact@v4
+        with:
+          name: Allure
+          path: allure-results
+          retention-days: 15
+
+      # - name: Download allurectl (macos-arm)
+      #   if: ${{ always()}}
+      #   run: |
+      #     curl -L https://github.com/allure-framework/allurectl/releases/latest/download/allurectl_darwin_arm64 -o allurectl
+      #     chmod +x allurectl
+
+      # - name: Upload results to TestOPS
+      #   if: ${{ always()}}
+      #   run: |
+      #     ./allurectl upload \
+      #       --endpoint https://allure.autotests.cloud/ \
+      #       --token ${{ secrets.ALLURE_TOKEN }} \
+      #       --project-id 0 \
+      #       --launch-name  "Launch: ${{ github.run_number }} Device: ${{ env.DEVICE }}" \
+      #       allure-results
+
+      # - name: Download allure-notificcation
+      #   if: ${{ always()}}
+      #   run: |
+      #     curl -L https://github.com/qa-guru/allure-notifications/releases/download/4.6.1/allure-notifications-4.6.1.jar -o notifications/allure-notifications.jar
+      #     chmod +x allurectl
+
+      # - name: Semd notification to telegram
+      #   run: java "-DconfigFile=notifications/config.json" -jar notifications/allure-notifications.jar
+
+      - name: Adding summary
+        if: ${{ always()}}
+        run: | 
+          echo "### Android tests :fire:" >> $GITHUB_STEP_SUMMARY
+          echo "Launch: ${{ github.run_number }}" >> $GITHUB_STEP_SUMMARY
+          echo "Device: ${{ env.DEVICE }}" >> $GITHUB_STEP_SUMMARY
+          

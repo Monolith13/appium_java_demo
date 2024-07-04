@@ -1,0 +1,16 @@
+{
+  "base": {
+    "project": "Appium Java Demo",
+    "environment": "prod",
+    "comment": "Execution of UI-tests was ended!",
+    "reportLink": "https://github.com/Monolith13/appium_java_demo",
+    "language": "en",
+    "allureFolder": "allure-report",
+    "enableChart": true
+  },
+  "telegram": {
+    "token": "???",
+    "chat": "???",
+    "replyTo": ""
+  }
+}
