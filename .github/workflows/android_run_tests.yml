@@ -56,14 +56,17 @@ jobs:
 
       - name: Install appium plugins 
         run: |
-          appium driver install uiautomator2
-          appium driver install espresso 
+          appium driver install uiautomator2 || appium driver update uiautomator2
+          appium driver install espresso || appium driver update espresso 
 
-      - name: Prepare android application
-        run: unzip -o src/test/resources/app/ru.beru.android.zip -d src/test/resources/app
+      - name: Prepare Android Application
+        run: |
+          unzip -o src/test/resources/app/ru.beru.android.zip -d src/test/resources/app
+          emulator -list-avds
 
-      # - name: Launch AVD 
-      #   run: emulator -avd ${{ env.DEVICE }}
+      # - name: Create & Launch AVD 
+      #   run: |
+            # emulator -avd ${{ env.DEVICE }} -no-window -no-snapshot -no-boot-anim -noaudio
 
       # - name: Run UI-tests
       #   run: ./gradlew test
