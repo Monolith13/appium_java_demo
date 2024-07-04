@@ -29,6 +29,8 @@ jobs:
     steps:
       - name: Checkout git
         uses: actions/checkout@v4
+        with:
+          clean: true
 
       - uses: actions/setup-java@v4
         with:
@@ -57,6 +59,9 @@ jobs:
         run: |
           appium driver install uiautomator2
           appium driver install espresso 
+
+      - name: Prepare android application
+        run: unzip -o src/test/resources/app/ru.beru.android.zip -d src/test/resources/app
 
       # - name: Launch AVD 
       #   run: emulator -avd ${{ env.DEVICE }}
