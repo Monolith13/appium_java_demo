@@ -33,13 +33,18 @@
 
 2.  Install all dependencies and apps:
 > brew install node
+> 
 > npm -g install appium
+> 
 > appium driver install xcuitest
+> 
 > appium driver install uiautomator2
 
 3.  Add JAVA_HOME, ANDROID_HOME and etc to your shell (e.g. zshrc):
 > export ANDROID_HOME="YOUR_PATH_TO_ANDROID_SDK/Android/sdk"
+> 
 > export JAVA_HOME="YOUR_PATH_TO_JDK/bin"
+> 
 > export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/build-tools:$ANDROID_HOME/platform-tools:$ANDROID_HOME/cmdline-tools
 
 4.  Create new Android Emulator (e.g. Pixel 8 API 33) with 4GB+ RAM
