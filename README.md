@@ -67,10 +67,10 @@
 - Make launch iOS tests more stable
 - Download actual last version of android app via curl/wget
 - Improve ReadMe for Windows and Linux OS
-- Add annotations for Allure Reports
+- Add more annotations for Allure Reports
 - Expand test coverage 
-- Remove slf4j or log4j (use only one logger)
-- Improve waiting actions in tests for more stability of test execution
+- Remove slf4j or log4j (use only one logger lib)
+- Improve waits (remove static waits) in tests for more stability of test execution
 
 ### Prepare iOS app before run tests
 Так как у нас нет исходников iOS приложения, то мы не сможем тестировать App Store версию приложения на iOS Simulator 
@@ -91,4 +91,5 @@
 - Linter [SonarQube](https://www.sonarsource.com/products/sonarqube/)
 - To download the iOS application you will need [Apple Configurator](https://support.apple.com/apple-configurator) or another apps
 - [Enabling Developer Mode on iOS](https://developer.apple.com/documentation/xcode/enabling-developer-mode-on-a-device)
+- [Types of wait in Appium](https://medium.com/@0101.priyanshi/types-of-wait-in-appium-0350730c91cc)
 
